@@ -10,4 +10,6 @@ public interface EmployeeService {
     Optional<EmployeeDTO> get(long id);
 
     void save(EmployeeDTO employeeDTO);
+
+    void next(long id, EmployeeStateEnum state);
 }
