@@ -1,6 +1,7 @@
 package com.workmotion.challenge.employee;
 
-import org.springframework.stereotype.Service;
+import com.workmotion.challenge.employee.state.Event;
+import com.workmotion.challenge.employee.state.State;
 
 import java.util.Optional;
 
@@ -11,5 +12,5 @@ public interface EmployeeService {
 
     void save(EmployeeDTO employeeDTO);
 
-    void next(long id, EmployeeStateEnum state);
+    void next(long id, Event event);
 }

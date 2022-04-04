@@ -1,5 +1,7 @@
 package com.workmotion.challenge.employee;
 
+import com.workmotion.challenge.employee.state.Event;
+import com.workmotion.challenge.employee.state.State;
 import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee")
-    public ResponseEntity<Void> save(EmployeeDTO employeeDTO){
+    public ResponseEntity<Void> save(@RequestBody EmployeeDTO employeeDTO){
 
         log.info(employeeDTO.toString());
 
@@ -33,11 +35,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee/{id}/{state}")
-    public ResponseEntity<Void> next(@PathVariable("id")  long id, @PathVariable("state") EmployeeStateEnum state){
+    public ResponseEntity<Void> next(@PathVariable("id")  long id, @PathVariable("state") Event event){
 
-        log.info(state.toString());
+        log.info(event.toString());
 
-        employeeService.next(id,state);
+        employeeService.next(id,event);
 
         return ResponseEntity.accepted().build();
 

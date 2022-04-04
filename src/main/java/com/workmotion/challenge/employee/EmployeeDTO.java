@@ -1,9 +1,6 @@
 package com.workmotion.challenge.employee;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,22 +13,22 @@ public class EmployeeDTO {
 
     @NotBlank
     @Size(min = 0, max = 20)
-    private String profilePic;
+    public String profilePic;
 
     @NotBlank
     @Size(min = 0, max = 20)
-    private String firstName;
+    public String firstName;
 
     @NotBlank
     @Size(min = 0, max = 20)
-    private String gender;
+    public String gender;
 
     @NotBlank
     @Size(min = 0, max = 20)
-    private String lastName;
+    public String lastName;
 
     @NotBlank
     @Size(min = 0, max = 20)
-    private String familyName;
+    public String familyName;
 
 }

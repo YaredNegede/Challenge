@@ -1,9 +1,7 @@
 package com.workmotion.challenge.employee;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.workmotion.challenge.employee.state.State;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +11,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Employee {
 
@@ -21,7 +21,8 @@ public class Employee {
    @Column(updatable = false, nullable = false)
    private long id;
 
-   private EmployeeStateEnum employeeState = EmployeeStateEnum.BEGIN_CHECK;
+
+   private State employeeState = State.ADDED;
 
    private String profilePic;
 
