@@ -1,28 +1,22 @@
 package com.workmotion.challenge.employee;
 
+import com.github.oxo42.stateless4j.StateMachine;
+import com.github.oxo42.stateless4j.StateMachineConfig;
 import com.workmotion.challenge.employee.state.State;
 import com.workmotion.challenge.employee.state.Event;
-import org.springframework.messaging.Message;
-import org.springframework.statemachine.StateMachine;
-import org.springframework.statemachine.config.StateMachineFactory;
-import org.springframework.statemachine.support.DefaultStateMachineContext;
-import org.springframework.statemachine.support.StateMachineInterceptor;
-import org.springframework.statemachine.support.StateMachineInterceptorAdapter;
-import org.springframework.statemachine.transition.Transition;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Log
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    private StateMachineFactory<State, Event> factory;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, StateMachineFactory<State, Event> factory) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.factory = factory;
     }
 
     @Override
@@ -58,48 +52,38 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void next(long employeeId, Event event) {
 
-        build(employeeId);
+        var fsm = new StateMachine<>(State.ADDED, build(employeeId));
+
+        fsm.fire(event);
 
     }
 
-    StateMachine<State, Event> build(long employeeId){
 
-        Employee employee = employeeRepository.getById(employeeId);
+    private StateMachineConfig<State, Event> build(long employeeId){
 
-        StateMachine<State, Event> machine = this.factory.getStateMachine();
+        StateMachineConfig<State, Event> phoneCallConfig = new StateMachineConfig<>();
 
-        machine.stop();
+        this.employeeRepository.findById(employeeId).ifPresent(employee -> {
 
-        machine.getStateMachineAccessor()
-                .doWithAllRegions(stateEventStateMachineAccess ->
-                        {
-                            stateEventStateMachineAccess.addStateMachineInterceptor(new StateMachineInterceptorAdapter<>() {
-                                @Override
-                                public void preStateChange(org.springframework.statemachine.state.State<State, Event> state,
-                                                           Message<Event> message, Transition<State,
-                                                           Event> transition,
-                                                           StateMachine<State, Event> stateMachine) {
+            phoneCallConfig.configure(State.ADDED)
+                .permit(Event.BEGIN_CHECK,State.IN_CHECK,()->{
+                    employee.setEmployeeState(State.IN_CHECK);
+                    this.employeeRepository.save(employee);
+                }).permit(Event.APPROVE,State.APPROVED,() -> {
+                        employee.setEmployeeState(State.IN_CHECK);
+                        this.employeeRepository.save(employee);
+                }).permit(Event.UNAPPROVE,State.IN_CHECK,() -> {
+                        employee.setEmployeeState(State.IN_CHECK);
+                        this.employeeRepository.save(employee);
+                }).permit(Event.ACTIVATE,State.ACTIVATE,() -> {
+                        employee.setEmployeeState(State.IN_CHECK);
+                        this.employeeRepository.save(employee);
+                });
 
-                                    Optional.of(message).ifPresent(employee->{
+        });
 
-                                        employeeRepository.findById(employeeId).ifPresent(emp -> {
+        return phoneCallConfig;
 
-                                            emp.setEmployeeState(state.getId());
-
-                                            employeeRepository.save(emp);
-
-                                        });
-
-                                    });
-                                }
-                            });
-                        stateEventStateMachineAccess.resetStateMachine(new DefaultStateMachineContext<>(employee.getEmployeeState(), null, null, null));
-
-                    }
-                );
-        machine.start();
-
-        return machine;
     }
 
 }
