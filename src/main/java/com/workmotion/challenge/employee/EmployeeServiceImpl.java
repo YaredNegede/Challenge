@@ -15,8 +15,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+    private StateMachineConfig<State, Event> config;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,StateMachineConfig<State, Event> config) {
         this.employeeRepository = employeeRepository;
+        this.config=config;
     }
 
     @Override
@@ -52,37 +55,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void next(long employeeId, Event event) {
 
-        var fsm = new StateMachine<>(State.ADDED, build(employeeId));
-
-        fsm.fire(event);
-
-    }
-
-
-    private StateMachineConfig<State, Event> build(long employeeId){
-
-        StateMachineConfig<State, Event> phoneCallConfig = new StateMachineConfig<>();
-
         this.employeeRepository.findById(employeeId).ifPresent(employee -> {
 
-            phoneCallConfig.configure(State.ADDED)
-                .permit(Event.BEGIN_CHECK,State.IN_CHECK,()->{
-                    employee.setEmployeeState(State.IN_CHECK);
-                    this.employeeRepository.save(employee);
-                }).permit(Event.APPROVE,State.APPROVED,() -> {
-                        employee.setEmployeeState(State.IN_CHECK);
-                        this.employeeRepository.save(employee);
-                }).permit(Event.UNAPPROVE,State.IN_CHECK,() -> {
-                        employee.setEmployeeState(State.IN_CHECK);
-                        this.employeeRepository.save(employee);
-                }).permit(Event.ACTIVATE,State.ACTIVATE,() -> {
-                        employee.setEmployeeState(State.IN_CHECK);
-                        this.employeeRepository.save(employee);
-                });
+            var fsm = new StateMachine<>(employee.getEmployeeState(), config);
+
+            fsm.fire(event);
+
+            if(!employee.getEmployeeState().equals(fsm.getState())) {
+
+                employee.setEmployeeState(fsm.getState());
+
+                employeeRepository.save(employee);
+
+            }
 
         });
-
-        return phoneCallConfig;
 
     }
 

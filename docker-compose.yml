@@ -1,0 +1,37 @@
+version: "3"
+networks:
+  workmotion:
+    ipam:
+      config:
+        - subnet: 192.168.55.0/4
+          gateway: 192.168.55.1
+    driver: bridge
+
+services:
+
+  challenge:
+    container_name: workmotion
+    build:
+      context: ./
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    networks: 
+      - workmotion
+    volumes:
+            - ./target/:/workmotion/
+
+  mysqlhost:
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    security_opt:
+      - seccomp:unconfined
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: workmotion
+    ports:
+      - '3306:3306'
+    networks:
+      - workmotion

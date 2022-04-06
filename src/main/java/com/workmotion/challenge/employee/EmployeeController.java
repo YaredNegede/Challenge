@@ -1,8 +1,8 @@
 package com.workmotion.challenge.employee;
 
 import com.workmotion.challenge.employee.state.Event;
-import com.workmotion.challenge.employee.state.State;
 import lombok.extern.java.Log;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +30,7 @@ public class EmployeeController {
 
         this.employeeService.save(employeeDTO);
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.status(HttpStatus.OK).build();
 
     }
 
@@ -41,7 +41,7 @@ public class EmployeeController {
 
         employeeService.next(id,event);
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok().build();
 
     }
 
