@@ -1,7 +1,6 @@
 package com.workmotion.challenge.employee;
 
 import com.workmotion.challenge.employee.state.Event;
-import com.workmotion.challenge.employee.state.State;
 import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
