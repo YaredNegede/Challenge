@@ -16,19 +16,19 @@ public class EmployeeDTO {
     public String profilePic;
 
     @NotBlank
-    @Size(min = 0, max = 20)
+    @Size(min = 5, max = 20)
     public String firstName;
 
     @NotBlank
-    @Size(min = 0, max = 20)
+    @Size(min = 1, max = 20)
     public String gender;
 
     @NotBlank
-    @Size(min = 0, max = 20)
+    @Size(min = 5, max = 20)
     public String lastName;
 
     @NotBlank
-    @Size(min = 0, max = 20)
+    @Size(min = 10, max = 20)
     public String familyName;
 
 }
