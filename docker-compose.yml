@@ -36,6 +36,3 @@ services:
       - '3306:3306'
     networks:
       - workmotion
-        
-#        gcloud compute ssh --zone "us-central1-a" "ride-00"  --tunnel-through-iap --project "ride-9cab6"
-#        gcloud compute ssh --zone "us-central1-a" "ride-00"  --tunnel-through-iap --project "ride-9cab6"
