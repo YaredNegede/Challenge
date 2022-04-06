@@ -15,12 +15,13 @@ services:
       context: ./
     restart: on-failure
     ports:
-      - "8080:8080"
+      - "80:8080"
     networks: 
       - workmotion
     volumes:
             - ./target/:/workmotion/
-
+    depends_on:
+      - mysqlhost
   mysqlhost:
     image: mysql
     cap_add:
@@ -35,3 +36,6 @@ services:
       - '3306:3306'
     networks:
       - workmotion
+        
+#        gcloud compute ssh --zone "us-central1-a" "ride-00"  --tunnel-through-iap --project "ride-9cab6"
+#        gcloud compute ssh --zone "us-central1-a" "ride-00"  --tunnel-through-iap --project "ride-9cab6"
