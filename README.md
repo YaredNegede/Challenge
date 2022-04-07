@@ -1,4 +1,4 @@
-## reuirements
+## Reuirements
 1. **docker-compose** version 1.27.4, build 40524192
 2. **Docker version** 20.10.7, build f0df350
 3. **git version** 2.25.1
