@@ -1,6 +1,6 @@
 ## Descriptions
 
-### The docker compose file pulls the images for mysql, builds the image for application dcoker file, run test
+### The docker compose file pulls the images for mysql, builds the image for application docker file, copy the jar
 ### you should be able to get the swagger page at the specified URL
 
 ## Reuirements
@@ -30,6 +30,8 @@
       cd WorkMotionChallenge
 
     #### 3. build the docker images  
+     
+      mvn clean package
 
       sudo docker-compose  build
 
