@@ -44,7 +44,9 @@ COPY ./mvnw .
 
 RUN mvn -N io.takari:maven:wrapper
 
-RUN mvn package -Dmaven.test.skip=true
+#RUN mvn package -Dmaven.test.skip=true
+
+RUN mvn test package
 
 WORKDIR /workmotion
 
