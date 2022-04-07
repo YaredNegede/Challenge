@@ -1,8 +1,7 @@
 package com.workmotion.challenge.employee;
 
 import com.github.oxo42.stateless4j.StateMachine;
-import com.github.oxo42.stateless4j.StateMachineConfig;
-import com.workmotion.challenge.employee.state.State;
+import com.workmotion.challenge.employee.state.MachineFactory;
 import com.workmotion.challenge.employee.state.Event;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
-    private StateMachineConfig<State, Event> config;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository,StateMachineConfig<State, Event> config) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.config=config;
     }
 
     @Override
@@ -57,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         this.employeeRepository.findById(employeeId).ifPresent(employee -> {
 
-            var fsm = new StateMachine<>(employee.getEmployeeState(), config);
+            var fsm = new StateMachine<>(employee.getEmployeeState(), MachineFactory.build());
 
             fsm.fire(event);
 
