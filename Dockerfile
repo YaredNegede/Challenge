@@ -48,6 +48,7 @@ RUN mvn package -Dmaven.test.skip=true
 
 WORKDIR /workmotion
 
+
 CMD cp /build/target/challenge-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8080
