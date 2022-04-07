@@ -1,3 +1,8 @@
+## Descriptions
+
+### The docker compose file pulls the images for mysql, builds the image for application dcoker file, run test
+### you should be able to get the swagger page at the specified URL
+
 ## Reuirements
 1. **docker-compose** version 1.27.4, build 40524192
 2. **Docker version** 20.10.7, build f0df350
@@ -16,22 +21,22 @@
 
 ## Getting Started
 
-#### 1. Get the code
+    #### 1. Get the code
 
-  git clone https://github.com/YaredNegede/WorkMotionChallenge.git
-  
-#### 2. change dir  
-  
-  cd WorkMotionChallenge
-  
-#### 3. build the docker images  
-  
-  sudo docker-compose  build
-  
-#### 4. run the images  
-  
-  sudo docker-compose  up
-  
-#### 5. follow this line which will show you openapi spec
+      git clone https://github.com/YaredNegede/WorkMotionChallenge.git
 
-[http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+    #### 2. change dir  
+
+      cd WorkMotionChallenge
+
+    #### 3. build the docker images  
+
+      sudo docker-compose  build
+
+    #### 4. run the images  
+
+      sudo docker-compose  up
+
+    #### 5. follow this line which will show you openapi spec
+
+    [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
