@@ -1,21 +1,21 @@
 # Getting Started
 
-#### Get the code
+#### 1. Get the code
 
   git clone https://github.com/YaredNegede/WorkMotionChallenge.git
   
-#### change dir  
+#### 2. change dir  
   
   cd WorkMotionChallenge
   
-#### build the docker images  
+#### 3. build the docker images  
   
   sudo docker-compose  build
   
-#### run the images  
+#### 4. run the images  
   
   sudo docker-compose  up
   
-#### follow this line which will show you openapi spec
+#### 5. follow this line which will show you openapi spec
 
 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
