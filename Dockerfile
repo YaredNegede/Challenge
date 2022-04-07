@@ -48,7 +48,9 @@ RUN mvn package -Dmaven.test.skip=true
 
 WORKDIR /workmotion
 
+
+CMD cp /build/target/challenge-0.0.1-SNAPSHOT.jar .
+
 EXPOSE 8080
 
-CMD ["java", "-jar", "./target/challenge-0.0.1-SNAPSHOT.jar"]
-
+CMD ["java", "-jar", "./challenge-0.0.1-SNAPSHOT.jar"]

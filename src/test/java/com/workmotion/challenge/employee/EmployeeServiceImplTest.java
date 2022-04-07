@@ -32,7 +32,7 @@ public class EmployeeServiceImplTest {
 
         employeeRepository = mock(EmployeeRepository.class);
 
-        employeeService = new EmployeeServiceImpl(employeeRepository, MachineFactory.build());
+        employeeService = new EmployeeServiceImpl(employeeRepository);
 
         StateMachineConfig<State, Event> machineConfig = MachineFactory.build();
 
