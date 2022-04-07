@@ -7,7 +7,7 @@
     Java version: 11.0.11, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
     Default locale: en_US, platform encoding: UTF-8
     OS name: "linux", version: "5.4.0-80-generic", arch: "amd64", family: "unix"
-5. ** java -version**
+5. **java -version**
     openjdk version "11.0.11" 2021-04-20
     OpenJDK Runtime Environment (build 11.0.11+9-Ubuntu-0ubuntu2.20.04)
     OpenJDK 64-Bit Server VM (build 11.0.11+9-Ubuntu-0ubuntu2.20.04, mixed mode, sharing)
